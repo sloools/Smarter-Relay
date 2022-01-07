@@ -1,12 +1,14 @@
 package com.boot.smartrelay.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -29,21 +31,25 @@ import java.util.HashMap;
 //    }
 //}
 @Configuration
+@PropertySource("classpath:/application.properties")
 @EnableTransactionManagement
 @EnableJpaRepositories(entityManagerFactoryRef = "mysqlEntityManager", transactionManagerRef = "mysqlTransactionManager", basePackages = "com.boot.smartrelay.mysql")
 public class DataSourceConfig {
 
     @Autowired
-    private Environment env;
+    Environment env;
+
+    @Autowired
+    DbConfigProperties dbConfigProperties;
 
     @Primary
     @Bean
     public DataSource mysqlDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
-        dataSource.setUrl(env.getProperty("spring.datasource.url"));
-        dataSource.setUsername(env.getProperty("spring.datasource.username"));
-        dataSource.setPassword(env.getProperty("spring.datasource.password"));
+        dataSource.setDriverClassName(dbConfigProperties.getDriverClass());
+        dataSource.setUrl(dbConfigProperties.getUrl());
+        dataSource.setUsername(dbConfigProperties.getUsername());
+        dataSource.setPassword(dbConfigProperties.getPassword());
         return dataSource;
     }
 

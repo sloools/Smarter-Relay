@@ -19,7 +19,7 @@ public class Test {
         UserDevice userDevice = UserDevice.builder()
                 .id(null)
                 .userId("song")
-                .deviecId("song-device")
+                .deviecId("song-device2")
                 .build();
 
         UserDevice saveUserDevice = adminDeviceJpaRepository.save(userDevice);
