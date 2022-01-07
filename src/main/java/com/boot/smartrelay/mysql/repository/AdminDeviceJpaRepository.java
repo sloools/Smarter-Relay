@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AdminDeviceJpaRepository extends JpaRepository<UserDevice, Integer> {
+    public boolean existsByDeviecId(String deviceId);
 }

@@ -46,7 +46,7 @@ public class DataSourceConfig {
     @Bean
     public DataSource mysqlDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(dbConfigProperties.getDriverClass());
+        dataSource.setDriverClassName(dbConfigProperties.getDriverClassName());
         dataSource.setUrl(dbConfigProperties.getUrl());
         dataSource.setUsername(dbConfigProperties.getUsername());
         dataSource.setPassword(dbConfigProperties.getPassword());
