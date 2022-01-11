@@ -1,6 +1,9 @@
 package com.boot.smartrelay.mysql;
 
+import com.boot.smartrelay.beans.ResponseBox;
+import com.boot.smartrelay.beans.User;
 import com.boot.smartrelay.mysql.entity.UserDevice;
+import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 public class AdminDeviceMysqlTest {
@@ -27,6 +30,39 @@ public class AdminDeviceMysqlTest {
 //                .deviecId("song-device2")
 //                .build();
 //    }
+
+    @Test
+    @DisplayName("Modify User Device ids Test")
+    public void modifyUserDeviceIds(){
+        String userId = "Andrew";
+        List<String> deviceList = new ArrayList<>();
+        deviceList.add("Andrew-device3");
+
+
+        ResponseBox responseBox = adminDeviceMysqlRepository.deleteAdminUserDeviceIdLists(userId, deviceList);
+
+        assertThat(responseBox.isStatus(), is(true));
+    }
+
+    @Test
+    @DisplayName("Select Device Ids List by User Id Test")
+    public void GetdeviceIdsByUserId(){
+        User user = User.builder()
+                .id("Song")
+                .build();
+
+        List<String> deviceIds = adminDeviceMysqlRepository.getValidDeviceIdLists(user);
+
+        assertThat(deviceIds, hasItem("song-device")); // Check If List Has This Value
+
+//        assertThat(deviceIds, hasSize(5)); // Check List Size
+//
+//        assertThat(deviceIds, containsInAnyOrder("song-device", "song-device2")); // Check List Contaions Items
+//
+//        assertThat(deviceIds, not(IsEmptyCollection.empty())); // Check If It is Empty (Null or Collections.emptyList() 둘 다 받음)
+
+    }
+
 
     @Test
     @DisplayName("Check If Device Id Is Exist Test when it's false")

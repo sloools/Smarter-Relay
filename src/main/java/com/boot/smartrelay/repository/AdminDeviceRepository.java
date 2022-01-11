@@ -55,6 +55,7 @@ public class AdminDeviceRepository {
         return Utils.makeResponseBox(status, message);
     }
 
+    // delete device Ids
     public ResponseBox modifyAdminUserDeviceIdLists(String userId, List<String> deviceId){
         boolean status = true;
         String message = "성공적으로 수정되었습니다.";
