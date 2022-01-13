@@ -2,9 +2,6 @@ package com.boot.smartrelay.mysql;
 
 import com.boot.smartrelay.beans.ResponseBox;
 import com.boot.smartrelay.beans.User;
-import com.boot.smartrelay.mysql.entity.UserDevice;
-import org.hamcrest.collection.IsEmptyCollection;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +28,9 @@ public class AdminDeviceMysqlTest {
 //                .build();
 //    }
 
+
     @Test
-    @DisplayName("Modify User Device ids Test")
+    @DisplayName("Delete User Device ids Test")
     public void modifyUserDeviceIds(){
         String userId = "Andrew";
         List<String> deviceList = new ArrayList<>();
@@ -41,7 +39,7 @@ public class AdminDeviceMysqlTest {
 
         ResponseBox responseBox = adminDeviceMysqlRepository.deleteAdminUserDeviceIdLists(userId, deviceList);
 
-        assertThat(responseBox.isStatus(), is(true));
+        assertThat(responseBox.isStatus(), is(false));
     }
 
     @Test

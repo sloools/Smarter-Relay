@@ -1,6 +1,6 @@
 package com.boot.smartrelay.mysql.repository;
 
-import com.boot.smartrelay.mysql.entity.UserDevice;
+import com.boot.smartrelay.mysql.entity.AdminDeviceEntity;
 import com.boot.smartrelay.mysql.repository.AdminDeviceJpaRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -26,13 +26,13 @@ public class AdminDeviceTest {
     @DisplayName("Save Device to user_device")
     public void save(){
 
-        UserDevice userDevice = UserDevice.builder()
+        AdminDeviceEntity userDevice = AdminDeviceEntity.builder()
                 .id(null)
                 .userId("song")
                 .deviecId("song-device")
                 .build();
 
-        UserDevice saveUserDevice = adminDeviceJpaRepository.save(userDevice);
+        AdminDeviceEntity saveUserDevice = adminDeviceJpaRepository.save(userDevice);
 
         Assertions.assertEquals(userDevice , saveUserDevice);
 

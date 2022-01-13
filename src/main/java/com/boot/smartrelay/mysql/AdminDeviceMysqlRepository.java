@@ -3,7 +3,8 @@ package com.boot.smartrelay.mysql;
 import com.boot.smartrelay.Utils;
 import com.boot.smartrelay.beans.ResponseBox;
 import com.boot.smartrelay.beans.User;
-import com.boot.smartrelay.mysql.entity.UserDevice;
+
+import com.boot.smartrelay.mysql.entity.AdminDeviceEntity;
 import com.boot.smartrelay.mysql.repository.AdminDeviceJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,9 @@ import java.util.stream.Collectors;
 public class AdminDeviceMysqlRepository {
 
     private final AdminDeviceJpaRepository adminDeviceJpaRepository;
+
+    // updateAdminUserDeviceIdLists 는 saveDeviceIds를 사용 가능하기 때문에 구현하지 않음
+    // AdminDevice ,SmartRelayDevice Collection을 mysql의 admin_device로 통합하였기 때문.
 
     /* Delete는 @Transactional 붙여줘야 함. service 개발되면 여기 붙은 어노테이션 제거해보기 */
     @Transactional
@@ -60,13 +64,13 @@ public class AdminDeviceMysqlRepository {
 
     public List<String> getValidDeviceIdLists(User user) {
         String userId = user.getId();
-        List<UserDevice> userDeviceList = null;
+        List<AdminDeviceEntity> userDeviceList = null;
         List<String> deviceIds = null;
         try {
             userDeviceList = adminDeviceJpaRepository.findAllDeviceIdByUserId(userId);
             deviceIds = userDeviceList
                                 .stream()
-                                .map(UserDevice::getDeviecId)
+                                .map(AdminDeviceEntity::getDeviecId)
                                 .collect(Collectors.toList());
         }catch (Exception e){
             e.printStackTrace();
@@ -94,7 +98,7 @@ public class AdminDeviceMysqlRepository {
 
     /**
      * AdminDeviceRepository.saveDeviceIds
-     * 유저 아이디와 디바이스 아이디를 user_device 테이블에 저장
+     * 유저 아이디와 디바이스 아이디를 admin_device 테이블에 저장
      * @param userId
      * @param deviceIds
      * @return
@@ -105,7 +109,7 @@ public class AdminDeviceMysqlRepository {
 
         try{
             deviceIds.stream().forEach(deviceId -> {
-                                            UserDevice userDevice = UserDevice.builder()
+                AdminDeviceEntity userDevice = AdminDeviceEntity.builder()
                                                     .userId(userId)
                                                     .deviecId(deviceId)
                                                     .build();

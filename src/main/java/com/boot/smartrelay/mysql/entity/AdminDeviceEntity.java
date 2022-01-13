@@ -11,8 +11,8 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name="user_device")
-public class UserDevice {
+@Entity(name="admin_device")
+public class AdminDeviceEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
